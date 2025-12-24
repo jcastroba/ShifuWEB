@@ -1,5 +1,5 @@
-import { d as db } from '../../chunks/db_DSGnrivC.mjs';
-import { g as getUserFromSession } from '../../chunks/auth_CSCHR02c.mjs';
+import { d as db } from '../../chunks/db_CQE9smPl.mjs';
+import { g as getUserFromSession } from '../../chunks/auth_CVOqfqat.mjs';
 export { renderers } from '../../renderers.mjs';
 
 const GET = async (context) => {
@@ -20,7 +20,7 @@ const GET = async (context) => {
     return new Response(JSON.stringify({ error: "Forbidden" }), { status: 403 });
   }
   const usersQuery = `
-    SELECT u.id, u.username, us.nickname, us.weekly_hours
+    SELECT u.id, u.username, us.nickname, us.weekly_hours, us.accumulated_debt
     FROM user_servers us
     JOIN users u ON us.user_id = u.id
     WHERE us.server_id = $1

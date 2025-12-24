@@ -1,14 +1,15 @@
 /* empty css                                     */
-import { c as createComponent, a as createAstro, m as maybeRenderHead, d as renderComponent, e as renderTemplate } from '../chunks/astro/server_C_x741Bc.mjs';
+import { e as createComponent, f as createAstro, m as maybeRenderHead, i as renderComponent, r as renderTemplate } from '../chunks/astro/server_DRFHNOgy.mjs';
 import 'kleur/colors';
-import { $ as $$Layout } from '../chunks/Layout_BUCrNJaf.mjs';
-import { d as db } from '../chunks/db_DSGnrivC.mjs';
-import { g as getUserFromSession } from '../chunks/auth_CSCHR02c.mjs';
+import 'html-escaper';
+import { $ as $$Layout } from '../chunks/Layout_5zhxqQCN.mjs';
+import { d as db } from '../chunks/db_CQE9smPl.mjs';
+import { g as getUserFromSession } from '../chunks/auth_CVOqfqat.mjs';
 import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
 import { useState, useEffect } from 'react';
 import { ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts';
 import { Calendar, CheckCircle, Clock, AlertCircle, History } from 'lucide-react';
-import { S as ShiftDetailModal } from '../chunks/ShiftDetailModal_Br-4eOsB.mjs';
+import { S as ShiftDetailModal } from '../chunks/ShiftDetailModal_CVAwd1Ft.mjs';
 export { renderers } from '../renderers.mjs';
 
 function UserDashboard({ userServers }) {
@@ -42,7 +43,7 @@ function UserDashboard({ userServers }) {
     return hours.toFixed(2) + "h";
   };
   return /* @__PURE__ */ jsxs("div", { className: "max-w-6xl mx-auto p-4 space-y-6 font-roboto", children: [
-    /* @__PURE__ */ jsxs("div", { className: "bg-surface dark:bg-secondary-dark rounded-xl shadow-lg p-6 flex flex-col md:flex-row justify-between items-center gap-4 border-l-4 border-primary-dark transition-colors duration-300", children: [
+    /* @__PURE__ */ jsxs("div", { className: "bg-white dark:bg-secondary-dark rounded-xl shadow-lg p-6 flex flex-col md:flex-row justify-between items-center gap-4 border-l-4 border-primary-dark transition-colors duration-300", children: [
       /* @__PURE__ */ jsxs("div", { children: [
         /* @__PURE__ */ jsx("h2", { className: "text-2xl font-lilita text-secondary-dark dark:text-primary", children: "Mi Panel de Control" }),
         /* @__PURE__ */ jsx("p", { className: "text-text-muted text-sm", children: "Resumen de actividad y horas" })
@@ -87,7 +88,7 @@ function UserDashboard({ userServers }) {
       /* @__PURE__ */ jsx("p", { className: "mt-4 text-text-muted", children: "Cargando datos..." })
     ] }) : data ? /* @__PURE__ */ jsxs(Fragment, { children: [
       /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4", children: [
-        /* @__PURE__ */ jsxs("div", { className: "bg-surface dark:bg-secondary-dark p-6 rounded-xl shadow-md border-t-4 border-blue-500 transition-colors duration-300", children: [
+        /* @__PURE__ */ jsxs("div", { className: "bg-white dark:bg-secondary-dark p-6 rounded-xl shadow-md border-t-4 border-blue-500 transition-colors duration-300", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-start", children: [
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("p", { className: "text-text-muted text-sm font-medium", children: "Horas Asignadas" }),
@@ -100,7 +101,7 @@ function UserDashboard({ userServers }) {
           ] }),
           /* @__PURE__ */ jsx("p", { className: "text-xs text-text-muted mt-2", children: "Meta semanal" })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "bg-surface dark:bg-secondary-dark p-6 rounded-xl shadow-md border-t-4 border-green-500 transition-colors duration-300", children: [
+        /* @__PURE__ */ jsxs("div", { className: "bg-white dark:bg-secondary-dark p-6 rounded-xl shadow-md border-t-4 border-green-500 transition-colors duration-300", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-start", children: [
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("p", { className: "text-text-muted text-sm font-medium", children: "Horas Trabajadas" }),
@@ -116,7 +117,7 @@ function UserDashboard({ userServers }) {
             }
           ) })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "bg-surface dark:bg-secondary-dark p-6 rounded-xl shadow-md border-t-4 border-yellow-500 transition-colors duration-300", children: [
+        /* @__PURE__ */ jsxs("div", { className: "bg-white dark:bg-secondary-dark p-6 rounded-xl shadow-md border-t-4 border-yellow-500 transition-colors duration-300", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-start", children: [
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("p", { className: "text-text-muted text-sm font-medium", children: "Pendientes" }),
@@ -126,7 +127,7 @@ function UserDashboard({ userServers }) {
           ] }),
           /* @__PURE__ */ jsx("p", { className: "text-xs text-text-muted mt-2", children: "Restantes para cumplir meta" })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "bg-surface dark:bg-secondary-dark p-6 rounded-xl shadow-md border-t-4 border-purple-500 transition-colors duration-300", children: [
+        /* @__PURE__ */ jsxs("div", { className: "bg-white dark:bg-secondary-dark p-6 rounded-xl shadow-md border-t-4 border-purple-500 transition-colors duration-300", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-start", children: [
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("p", { className: "text-text-muted text-sm font-medium", children: "Horas Extras" }),
@@ -136,7 +137,7 @@ function UserDashboard({ userServers }) {
           ] }),
           /* @__PURE__ */ jsx("p", { className: "text-xs text-text-muted mt-2", children: "Superando la meta" })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "bg-surface dark:bg-secondary-dark p-6 rounded-xl shadow-md border-t-4 border-red-500 transition-colors duration-300", children: [
+        /* @__PURE__ */ jsxs("div", { className: "bg-white dark:bg-secondary-dark p-6 rounded-xl shadow-md border-t-4 border-red-500 transition-colors duration-300", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-start", children: [
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("p", { className: "text-text-muted text-sm font-medium", children: "Deuda Acumulada" }),
@@ -151,7 +152,7 @@ function UserDashboard({ userServers }) {
         ] })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-6", children: [
-        /* @__PURE__ */ jsxs("div", { className: "bg-surface dark:bg-secondary-dark p-6 rounded-xl shadow-md lg:col-span-2 transition-colors duration-300", children: [
+        /* @__PURE__ */ jsxs("div", { className: "bg-white dark:bg-secondary-dark p-6 rounded-xl shadow-md lg:col-span-2 transition-colors duration-300", children: [
           /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-text-main mb-4", children: "Progreso Actual" }),
           /* @__PURE__ */ jsx("div", { className: "h-64", children: /* @__PURE__ */ jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxs(
             BarChart,
@@ -179,7 +180,7 @@ function UserDashboard({ userServers }) {
             }
           ) }) })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "bg-surface dark:bg-secondary-dark p-6 rounded-xl shadow-md transition-colors duration-300", children: [
+        /* @__PURE__ */ jsxs("div", { className: "bg-white dark:bg-secondary-dark p-6 rounded-xl shadow-md transition-colors duration-300", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-4", children: [
             /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-text-main", children: "Historial Reciente" }),
             /* @__PURE__ */ jsx(History, { size: 20, className: "text-text-muted" })

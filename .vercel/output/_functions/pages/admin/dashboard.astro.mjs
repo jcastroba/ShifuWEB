@@ -1,13 +1,14 @@
 /* empty css                                        */
-import { c as createComponent, a as createAstro, d as renderComponent, e as renderTemplate, m as maybeRenderHead } from '../../chunks/astro/server_C_x741Bc.mjs';
+import { e as createComponent, f as createAstro, i as renderComponent, r as renderTemplate, m as maybeRenderHead } from '../../chunks/astro/server_DRFHNOgy.mjs';
 import 'kleur/colors';
-import { $ as $$Layout } from '../../chunks/Layout_BUCrNJaf.mjs';
+import 'html-escaper';
+import { $ as $$Layout } from '../../chunks/Layout_5zhxqQCN.mjs';
 import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
 import { useState, useEffect } from 'react';
 import { Loader2, Send, RefreshCw, CheckCircle, Bell, Save, Settings, User, XCircle, PlayCircle, Clock } from 'lucide-react';
-import { S as ShiftDetailModal } from '../../chunks/ShiftDetailModal_Br-4eOsB.mjs';
-import { d as db } from '../../chunks/db_DSGnrivC.mjs';
-import { g as getUserFromSession } from '../../chunks/auth_CSCHR02c.mjs';
+import { S as ShiftDetailModal } from '../../chunks/ShiftDetailModal_CVAwd1Ft.mjs';
+import { d as db } from '../../chunks/db_CQE9smPl.mjs';
+import { g as getUserFromSession } from '../../chunks/auth_CVOqfqat.mjs';
 export { renderers } from '../../renderers.mjs';
 
 function TelegramSettings({ serverId }) {
@@ -115,7 +116,7 @@ function TelegramSettings({ serverId }) {
     });
   };
   if (loading) return /* @__PURE__ */ jsx("div", { className: "p-10 text-center", children: /* @__PURE__ */ jsx(Loader2, { className: "animate-spin mx-auto text-primary" }) });
-  return /* @__PURE__ */ jsxs("div", { className: "bg-surface dark:bg-secondary-dark p-6 rounded-xl shadow-lg border border-border-color space-y-8 transition-colors duration-300", children: [
+  return /* @__PURE__ */ jsxs("div", { className: "bg-white dark:bg-secondary-dark p-6 rounded-xl shadow-lg border border-border-color space-y-8 transition-colors duration-300", children: [
     /* @__PURE__ */ jsxs("div", { className: "border-b border-border-color pb-4", children: [
       /* @__PURE__ */ jsxs("h2", { className: "text-2xl font-bold text-text-main flex items-center gap-2", children: [
         /* @__PURE__ */ jsx(Send, { className: "text-blue-500" }),
@@ -156,7 +157,7 @@ function TelegramSettings({ serverId }) {
       /* @__PURE__ */ jsx("h3", { className: "font-bold text-lg text-text-main", children: "2. Vincular Grupo" }),
       !verificationCode ? /* @__PURE__ */ jsx("div", { className: "text-center py-4", children: /* @__PURE__ */ jsx("p", { className: "text-text-muted mb-4", children: "Guarda la configuración para generar un código de vinculación." }) }) : /* @__PURE__ */ jsxs("div", { className: "bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 p-6 rounded-xl text-center space-y-4", children: [
         /* @__PURE__ */ jsx("p", { className: "text-yellow-800 dark:text-yellow-300 font-medium", children: "Envía este mensaje a tu grupo de Telegram:" }),
-        /* @__PURE__ */ jsxs("div", { className: "text-3xl font-mono font-bold text-text-main bg-surface dark:bg-gray-800 p-4 rounded-lg border border-border-color inline-block select-all", children: [
+        /* @__PURE__ */ jsxs("div", { className: "text-3xl font-mono font-bold text-text-main bg-white dark:bg-gray-800 p-4 rounded-lg border border-border-color inline-block select-all", children: [
           "/start ",
           verificationCode
         ] }),
@@ -413,7 +414,7 @@ function AdminDashboard({ adminServers }) {
   };
   const [showTelegramSettings, setShowTelegramSettings] = useState(false);
   return /* @__PURE__ */ jsxs("div", { className: "font-roboto space-y-6", children: [
-    /* @__PURE__ */ jsxs("div", { className: "bg-surface dark:bg-secondary-dark p-4 rounded-xl shadow-md border-l-4 border-primary-dark flex flex-col lg:flex-row gap-4 justify-between items-start lg:items-center transition-colors duration-300", children: [
+    /* @__PURE__ */ jsxs("div", { className: "bg-white dark:bg-secondary-dark p-4 rounded-xl shadow-md border-l-4 border-primary-dark flex flex-col lg:flex-row gap-4 justify-between items-start lg:items-center transition-colors duration-300", children: [
       /* @__PURE__ */ jsxs("div", { className: "w-full lg:w-auto flex items-center gap-3", children: [
         currentServer?.icon_url && /* @__PURE__ */ jsx(
           "img",
@@ -486,7 +487,7 @@ function AdminDashboard({ adminServers }) {
               ]
             }
           ),
-          isUserDropdownOpen && /* @__PURE__ */ jsxs("div", { className: "absolute right-0 mt-2 w-64 bg-surface dark:bg-secondary-dark border border-border-color rounded-lg shadow-xl z-50 p-2", children: [
+          isUserDropdownOpen && /* @__PURE__ */ jsxs("div", { className: "absolute right-0 mt-2 w-64 bg-white dark:bg-secondary-dark border border-border-color rounded-lg shadow-xl z-50 p-2", children: [
             /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center mb-2", children: [
               /* @__PURE__ */ jsx(
                 "input",
@@ -511,25 +512,25 @@ function AdminDashboard({ adminServers }) {
     ] }),
     showTelegramSettings && selectedServer && /* @__PURE__ */ jsx(TelegramSettings, { serverId: selectedServer }),
     stats && /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-4 gap-4", children: [
-      /* @__PURE__ */ jsxs("div", { className: "bg-surface dark:bg-secondary-dark p-4 rounded-xl shadow border-t-4 border-green-500 transition-colors duration-300", children: [
+      /* @__PURE__ */ jsxs("div", { className: "bg-white dark:bg-secondary-dark p-4 rounded-xl shadow border-t-4 border-green-500 transition-colors duration-300", children: [
         /* @__PURE__ */ jsx("p", { className: "text-text-muted text-xs font-bold uppercase", children: "Total Horas Trabajadas" }),
         /* @__PURE__ */ jsxs("h3", { className: "text-2xl font-bold text-text-main", children: [
           stats.totalWorkedHours.toFixed(2),
           "h"
         ] })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "bg-surface dark:bg-secondary-dark p-4 rounded-xl shadow border-t-4 border-yellow-500 transition-colors duration-300", children: [
+      /* @__PURE__ */ jsxs("div", { className: "bg-white dark:bg-secondary-dark p-4 rounded-xl shadow border-t-4 border-yellow-500 transition-colors duration-300", children: [
         /* @__PURE__ */ jsx("p", { className: "text-text-muted text-xs font-bold uppercase", children: "Total Horas Break" }),
         /* @__PURE__ */ jsxs("h3", { className: "text-2xl font-bold text-text-main", children: [
           stats.totalBreakHours.toFixed(2),
           "h"
         ] })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "bg-surface dark:bg-secondary-dark p-4 rounded-xl shadow border-t-4 border-blue-500 transition-colors duration-300", children: [
+      /* @__PURE__ */ jsxs("div", { className: "bg-white dark:bg-secondary-dark p-4 rounded-xl shadow border-t-4 border-blue-500 transition-colors duration-300", children: [
         /* @__PURE__ */ jsx("p", { className: "text-text-muted text-xs font-bold uppercase", children: "Turnos Totales" }),
         /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-text-main", children: stats.totalShifts })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "bg-surface dark:bg-secondary-dark p-4 rounded-xl shadow border-t-4 border-purple-500 transition-colors duration-300", children: [
+      /* @__PURE__ */ jsxs("div", { className: "bg-white dark:bg-secondary-dark p-4 rounded-xl shadow border-t-4 border-purple-500 transition-colors duration-300", children: [
         /* @__PURE__ */ jsx("p", { className: "text-text-muted text-xs font-bold uppercase", children: "Horas Extras (Total)" }),
         /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-text-main", children: "-" }),
         /* @__PURE__ */ jsx("p", { className: "text-xs text-text-muted", children: "Ver detalle por usuario" })
@@ -541,13 +542,13 @@ function AdminDashboard({ adminServers }) {
           /* @__PURE__ */ jsx(PlayCircle, { className: "text-green-500" }),
           " Turnos Activos"
         ] }),
-        activeShifts.length === 0 ? /* @__PURE__ */ jsx("div", { className: "bg-surface dark:bg-secondary-dark p-6 rounded-xl shadow text-center text-text-muted transition-colors duration-300", children: "No hay usuarios trabajando en este momento." }) : activeShifts.map((shift) => {
+        activeShifts.length === 0 ? /* @__PURE__ */ jsx("div", { className: "bg-white dark:bg-secondary-dark p-6 rounded-xl shadow text-center text-text-muted transition-colors duration-300", children: "No hay usuarios trabajando en este momento." }) : activeShifts.map((shift) => {
           const isOnBreak = !!shift.active_break;
           const startTime = new Date(shift.start_time).getTime();
           const breakStart = isOnBreak ? new Date(shift.active_break.break_start).getTime() : 0;
           const elapsed = Math.max(0, now - startTime);
           const breakElapsed = isOnBreak ? Math.max(0, now - breakStart) : 0;
-          return /* @__PURE__ */ jsxs("div", { className: `bg-surface dark:bg-secondary-dark p-4 rounded-xl shadow border-l-4 ${isOnBreak ? "border-yellow-400" : "border-green-500"} transition-colors duration-300`, children: [
+          return /* @__PURE__ */ jsxs("div", { className: `bg-white dark:bg-secondary-dark p-4 rounded-xl shadow border-l-4 ${isOnBreak ? "border-yellow-400" : "border-green-500"} transition-colors duration-300`, children: [
             /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-start mb-2", children: [
               /* @__PURE__ */ jsxs("div", { children: [
                 /* @__PURE__ */ jsx("h4", { className: "font-bold text-text-main", children: shift.nickname }),
@@ -595,7 +596,7 @@ function AdminDashboard({ adminServers }) {
           /* @__PURE__ */ jsx(Clock, { className: "text-primary" }),
           " Historial de Turnos"
         ] }),
-        /* @__PURE__ */ jsx("div", { className: "bg-surface dark:bg-secondary-dark rounded-xl shadow overflow-hidden transition-colors duration-300", children: /* @__PURE__ */ jsx("div", { className: "overflow-x-auto", children: /* @__PURE__ */ jsxs("table", { className: "min-w-full divide-y divide-border-color", children: [
+        /* @__PURE__ */ jsx("div", { className: "bg-white dark:bg-secondary-dark rounded-xl shadow overflow-hidden transition-colors duration-300", children: /* @__PURE__ */ jsx("div", { className: "overflow-x-auto", children: /* @__PURE__ */ jsxs("table", { className: "min-w-full divide-y divide-border-color", children: [
           /* @__PURE__ */ jsx("thead", { className: "bg-secondary-dark text-white", children: /* @__PURE__ */ jsxs("tr", { children: [
             /* @__PURE__ */ jsx("th", { className: "px-4 py-3 text-left text-xs font-medium uppercase", children: "Usuario" }),
             /* @__PURE__ */ jsx("th", { className: "px-4 py-3 text-left text-xs font-medium uppercase", children: "Fecha" }),
@@ -603,7 +604,7 @@ function AdminDashboard({ adminServers }) {
             /* @__PURE__ */ jsx("th", { className: "px-4 py-3 text-left text-xs font-medium uppercase", children: "Break" }),
             /* @__PURE__ */ jsx("th", { className: "px-4 py-3 text-left text-xs font-medium uppercase", children: "Estado" })
           ] }) }),
-          /* @__PURE__ */ jsx("tbody", { className: "bg-surface dark:bg-secondary-dark divide-y divide-border-color", children: history.length === 0 ? /* @__PURE__ */ jsx("tr", { children: /* @__PURE__ */ jsx("td", { colSpan: 5, className: "p-4 text-center text-text-muted", children: "No hay registros en este periodo." }) }) : history.map((h) => /* @__PURE__ */ jsxs(
+          /* @__PURE__ */ jsx("tbody", { className: "bg-white dark:bg-secondary-dark divide-y divide-border-color", children: history.length === 0 ? /* @__PURE__ */ jsx("tr", { children: /* @__PURE__ */ jsx("td", { colSpan: 5, className: "p-4 text-center text-text-muted", children: "No hay registros en este periodo." }) }) : history.map((h) => /* @__PURE__ */ jsxs(
             "tr",
             {
               onClick: () => setSelectedShift(h),
@@ -643,7 +644,7 @@ function AdminDashboard({ adminServers }) {
         onClose: () => setSelectedShift(null)
       }
     ),
-    actionModal && /* @__PURE__ */ jsx("div", { className: "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4", children: /* @__PURE__ */ jsxs("div", { className: "bg-surface dark:bg-secondary-dark rounded-xl shadow-2xl max-w-md w-full p-6 border border-border-color", children: [
+    actionModal && /* @__PURE__ */ jsx("div", { className: "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4", children: /* @__PURE__ */ jsxs("div", { className: "bg-white dark:bg-secondary-dark rounded-xl shadow-2xl max-w-md w-full p-6 border border-border-color", children: [
       /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold mb-2 text-text-main", children: actionModal.type === "close_shift" ? "Cerrar Turno Forzosamente" : "Finalizar Break Forzosamente" }),
       /* @__PURE__ */ jsxs("p", { className: "text-text-muted mb-4", children: [
         "Estás a punto de modificar el estado de ",

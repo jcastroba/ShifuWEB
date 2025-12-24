@@ -1,12 +1,13 @@
 /* empty css                                        */
-import { c as createComponent, a as createAstro, d as renderComponent, e as renderTemplate, m as maybeRenderHead } from '../../chunks/astro/server_C_x741Bc.mjs';
+import { e as createComponent, f as createAstro, i as renderComponent, r as renderTemplate, m as maybeRenderHead } from '../../chunks/astro/server_DRFHNOgy.mjs';
 import 'kleur/colors';
-import { $ as $$Layout } from '../../chunks/Layout_BUCrNJaf.mjs';
+import 'html-escaper';
+import { $ as $$Layout } from '../../chunks/Layout_5zhxqQCN.mjs';
 import { jsx, jsxs } from 'react/jsx-runtime';
 import { useState, useEffect } from 'react';
-import { Calendar, Clock, CheckCircle, Save, X } from 'lucide-react';
-import { d as db } from '../../chunks/db_DSGnrivC.mjs';
-import { g as getUserFromSession } from '../../chunks/auth_CSCHR02c.mjs';
+import { Calendar, Clock, CheckCircle, Save, DollarSign, X, AlertCircle } from 'lucide-react';
+import { d as db } from '../../chunks/db_CQE9smPl.mjs';
+import { g as getUserFromSession } from '../../chunks/auth_CVOqfqat.mjs';
 export { renderers } from '../../renderers.mjs';
 
 const DAYS = [
@@ -22,6 +23,7 @@ function ScheduleManager({ serverId, userId, onSave }) {
   const [globalStart, setGlobalStart] = useState("09:00");
   const [globalEnd, setGlobalEnd] = useState("17:00");
   const [restDays, setRestDays] = useState([]);
+  const [applyProRating, setApplyProRating] = useState(false);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [totalHours, setTotalHours] = useState(0);
@@ -87,7 +89,8 @@ function ScheduleManager({ serverId, userId, onSave }) {
         body: JSON.stringify({
           serverId,
           targetUserId: userId,
-          schedule
+          schedule,
+          applyProRating
         })
       });
       if (res.ok) {
@@ -106,7 +109,7 @@ function ScheduleManager({ serverId, userId, onSave }) {
     }
   };
   if (loading) return /* @__PURE__ */ jsx("div", { className: "p-4 text-center text-text-main", children: "Cargando horario..." });
-  return /* @__PURE__ */ jsxs("div", { className: "bg-surface p-6 rounded-xl shadow-lg font-roboto border border-border", children: [
+  return /* @__PURE__ */ jsxs("div", { className: "bg-white dark:bg-secondary-dark p-6 rounded-xl shadow-lg font-roboto border border-border", children: [
     /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center mb-6", children: [
       /* @__PURE__ */ jsxs("h3", { className: "text-xl font-lilita text-secondary-dark dark:text-white flex items-center gap-2", children: [
         /* @__PURE__ */ jsx(Calendar, { className: "text-primary" }),
@@ -134,7 +137,7 @@ function ScheduleManager({ serverId, userId, onSave }) {
               type: "time",
               value: globalStart,
               onChange: (e) => setGlobalStart(e.target.value),
-              className: "border border-border bg-surface text-text-main rounded-lg p-2 font-mono focus:ring-primary focus:border-primary"
+              className: "border border-border bg-white dark:bg-secondary-dark text-text-main rounded-lg p-2 font-mono focus:ring-primary focus:border-primary"
             }
           )
         ] }),
@@ -147,7 +150,7 @@ function ScheduleManager({ serverId, userId, onSave }) {
               type: "time",
               value: globalEnd,
               onChange: (e) => setGlobalEnd(e.target.value),
-              className: "border border-border bg-surface text-text-main rounded-lg p-2 font-mono focus:ring-primary focus:border-primary"
+              className: "border border-border bg-white dark:bg-secondary-dark text-text-main rounded-lg p-2 font-mono focus:ring-primary focus:border-primary"
             }
           )
         ] })
@@ -163,7 +166,7 @@ function ScheduleManager({ serverId, userId, onSave }) {
             onClick: () => toggleRestDay(day.id),
             className: `
                             cursor-pointer p-3 rounded-lg border transition-all flex items-center justify-between
-                            ${isRest ? "bg-green-100 dark:bg-green-900/30 border-green-300 dark:border-green-700 text-green-800 dark:text-green-300 shadow-sm" : "bg-surface border-border text-text-muted hover:bg-background"}
+                            ${isRest ? "bg-green-100 dark:bg-green-900/30 border-green-300 dark:border-green-700 text-green-800 dark:text-green-300 shadow-sm" : "bg-white dark:bg-secondary-dark border-border text-text-muted hover:bg-background"}
                         `,
             children: [
               /* @__PURE__ */ jsx("span", { className: "font-bold", children: day.name }),
@@ -174,6 +177,22 @@ function ScheduleManager({ serverId, userId, onSave }) {
         );
       }) })
     ] }),
+    /* @__PURE__ */ jsx("div", { className: "mb-6 bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-100 dark:border-blue-800", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+      /* @__PURE__ */ jsx(
+        "input",
+        {
+          type: "checkbox",
+          id: "proRating",
+          checked: applyProRating,
+          onChange: (e) => setApplyProRating(e.target.checked),
+          className: "w-5 h-5 text-primary border-gray-300 rounded focus:ring-primary cursor-pointer"
+        }
+      ),
+      /* @__PURE__ */ jsxs("label", { htmlFor: "proRating", className: "text-sm text-text-main font-medium cursor-pointer select-none", children: [
+        "Aplicar prorrateo (inicio a mitad de semana)",
+        /* @__PURE__ */ jsx("p", { className: "text-xs text-text-muted font-normal mt-1", children: "Si se marca, se restarán de la deuda las horas correspondientes a los días de esta semana que ya han pasado." })
+      ] })
+    ] }) }),
     /* @__PURE__ */ jsx("div", { className: "mt-8 flex justify-end border-t border-border pt-4", children: /* @__PURE__ */ jsxs(
       "button",
       {
@@ -194,6 +213,9 @@ function AdminHoursManager({ adminServers }) {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [scheduleModalUser, setScheduleModalUser] = useState(null);
+  const [debtModalUser, setDebtModalUser] = useState(null);
+  const [debtAmount, setDebtAmount] = useState("");
+  const [debtType, setDebtType] = useState("partial");
   const fetchUsers = () => {
     if (!selectedServer) {
       setUsers([]);
@@ -211,8 +233,33 @@ function AdminHoursManager({ adminServers }) {
   useEffect(() => {
     fetchUsers();
   }, [selectedServer]);
+  const handleReduceDebt = async () => {
+    if (!debtModalUser || !selectedServer) return;
+    try {
+      const res = await fetch("/api/admin/reduce-debt", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          serverId: selectedServer,
+          targetUserId: debtModalUser.id,
+          amount: debtType === "partial" ? parseFloat(debtAmount) : 0,
+          type: debtType
+        })
+      });
+      if (res.ok) {
+        setDebtModalUser(null);
+        setDebtAmount("");
+        fetchUsers();
+      } else {
+        alert("Error al reducir deuda");
+      }
+    } catch (e) {
+      console.error(e);
+      alert("Error de conexión");
+    }
+  };
   if (adminServers.length === 0) return null;
-  return /* @__PURE__ */ jsxs("div", { className: "bg-surface p-6 rounded-lg shadow-md mt-6 font-roboto border border-border", children: [
+  return /* @__PURE__ */ jsxs("div", { className: "bg-white dark:bg-secondary-dark p-6 rounded-lg shadow-md mt-6 font-roboto border border-border", children: [
     /* @__PURE__ */ jsx("div", { className: "flex justify-between items-center mb-6", children: /* @__PURE__ */ jsx("h2", { className: "text-2xl font-lilita text-secondary-dark dark:text-white", children: "Gestión de Usuarios" }) }),
     /* @__PURE__ */ jsxs("div", { className: "mb-6", children: [
       /* @__PURE__ */ jsx("label", { className: "block text-sm font-medium text-text-main mb-2", children: "Seleccionar Servidor" }),
@@ -234,9 +281,10 @@ function AdminHoursManager({ adminServers }) {
       /* @__PURE__ */ jsx("thead", { className: "bg-secondary-dark text-white", children: /* @__PURE__ */ jsxs("tr", { children: [
         /* @__PURE__ */ jsx("th", { className: "px-6 py-3 text-left text-xs font-medium uppercase tracking-wider", children: "Usuario" }),
         /* @__PURE__ */ jsx("th", { className: "px-6 py-3 text-left text-xs font-medium uppercase tracking-wider", children: "Horas Semanales" }),
+        /* @__PURE__ */ jsx("th", { className: "px-6 py-3 text-left text-xs font-medium uppercase tracking-wider", children: "Deuda" }),
         /* @__PURE__ */ jsx("th", { className: "px-6 py-3 text-left text-xs font-medium uppercase tracking-wider", children: "Acciones" })
       ] }) }),
-      /* @__PURE__ */ jsx("tbody", { className: "bg-surface divide-y divide-border", children: users.map((user) => /* @__PURE__ */ jsxs("tr", { className: "hover:bg-background transition-colors", children: [
+      /* @__PURE__ */ jsx("tbody", { className: "bg-white dark:bg-secondary-dark divide-y divide-border", children: users.map((user) => /* @__PURE__ */ jsxs("tr", { className: "hover:bg-background transition-colors", children: [
         /* @__PURE__ */ jsx("td", { className: "px-6 py-4 whitespace-nowrap", children: /* @__PURE__ */ jsx("div", { className: "flex items-center", children: /* @__PURE__ */ jsxs("div", { className: "ml-4", children: [
           /* @__PURE__ */ jsx("div", { className: "text-sm font-medium text-text-main", children: user.nickname || user.username }),
           /* @__PURE__ */ jsxs("div", { className: "text-sm text-text-muted", children: [
@@ -248,21 +296,42 @@ function AdminHoursManager({ adminServers }) {
           /* @__PURE__ */ jsx("span", { className: "font-bold text-text-main text-lg", children: user.weekly_hours || 0 }),
           /* @__PURE__ */ jsx("span", { className: "ml-1 text-text-muted text-xs", children: "hrs" })
         ] }) }),
-        /* @__PURE__ */ jsx("td", { className: "px-6 py-4 whitespace-nowrap", children: /* @__PURE__ */ jsxs(
-          "button",
-          {
-            onClick: () => setScheduleModalUser(user),
-            className: "flex items-center gap-1 text-primary hover:text-primary-dark font-bold text-sm bg-primary/10 px-3 py-1 rounded-lg transition-colors",
-            children: [
-              /* @__PURE__ */ jsx(Calendar, { size: 16 }),
-              "Gestionar Horario"
-            ]
-          }
-        ) })
+        /* @__PURE__ */ jsx("td", { className: "px-6 py-4 whitespace-nowrap", children: /* @__PURE__ */ jsxs("div", { className: `flex items-center justify-center rounded-lg p-2 w-24 border border-border ${Number(user.accumulated_debt) > 0 ? "bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400" : "bg-background text-text-main"}`, children: [
+          /* @__PURE__ */ jsx("span", { className: "font-bold text-lg", children: Number(user.accumulated_debt || 0).toFixed(1) }),
+          /* @__PURE__ */ jsx("span", { className: "ml-1 text-xs", children: "hrs" })
+        ] }) }),
+        /* @__PURE__ */ jsx("td", { className: "px-6 py-4 whitespace-nowrap", children: /* @__PURE__ */ jsxs("div", { className: "flex gap-2", children: [
+          /* @__PURE__ */ jsxs(
+            "button",
+            {
+              onClick: () => setScheduleModalUser(user),
+              className: "flex items-center gap-1 text-primary hover:text-primary-dark font-bold text-sm bg-primary/10 px-3 py-1 rounded-lg transition-colors",
+              children: [
+                /* @__PURE__ */ jsx(Calendar, { size: 16 }),
+                "Gestionar Horario"
+              ]
+            }
+          ),
+          Number(user.accumulated_debt) > 0 && /* @__PURE__ */ jsxs(
+            "button",
+            {
+              onClick: () => {
+                setDebtModalUser(user);
+                setDebtType("partial");
+                setDebtAmount("");
+              },
+              className: "flex items-center gap-1 text-red-600 hover:text-red-700 font-bold text-sm bg-red-100 px-3 py-1 rounded-lg transition-colors",
+              children: [
+                /* @__PURE__ */ jsx(DollarSign, { size: 16 }),
+                "Reducir Deuda"
+              ]
+            }
+          )
+        ] }) })
       ] }, user.id)) })
     ] }) }),
     !loading && selectedServer && users.length === 0 && /* @__PURE__ */ jsx("p", { className: "text-center text-text-muted py-10", children: "No se encontraron usuarios en este servidor." }),
-    scheduleModalUser && /* @__PURE__ */ jsx("div", { className: "fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4", children: /* @__PURE__ */ jsxs("div", { className: "bg-surface rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative border border-border", children: [
+    scheduleModalUser && /* @__PURE__ */ jsx("div", { className: "fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4", children: /* @__PURE__ */ jsxs("div", { className: "bg-white dark:bg-secondary-dark rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative border border-border", children: [
       /* @__PURE__ */ jsx(
         "button",
         {
@@ -286,6 +355,88 @@ function AdminHoursManager({ adminServers }) {
             }
           }
         )
+      ] })
+    ] }) }),
+    debtModalUser && /* @__PURE__ */ jsx("div", { className: "fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4", children: /* @__PURE__ */ jsxs("div", { className: "bg-white dark:bg-secondary-dark rounded-xl shadow-2xl max-w-md w-full relative border border-border p-6", children: [
+      /* @__PURE__ */ jsx(
+        "button",
+        {
+          onClick: () => setDebtModalUser(null),
+          className: "absolute top-4 right-4 text-text-muted hover:text-text-main transition-colors",
+          children: /* @__PURE__ */ jsx(X, { size: 24 })
+        }
+      ),
+      /* @__PURE__ */ jsxs("h3", { className: "text-xl font-bold mb-4 text-text-main flex items-center gap-2", children: [
+        /* @__PURE__ */ jsx(DollarSign, { className: "text-red-500" }),
+        "Reducir Deuda"
+      ] }),
+      /* @__PURE__ */ jsxs("p", { className: "text-text-muted mb-4", children: [
+        "Usuario: ",
+        /* @__PURE__ */ jsx("span", { className: "font-bold text-text-main", children: debtModalUser.nickname }),
+        /* @__PURE__ */ jsx("br", {}),
+        "Deuda Actual: ",
+        /* @__PURE__ */ jsxs("span", { className: "font-bold text-red-500", children: [
+          debtModalUser.accumulated_debt,
+          " hrs"
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex gap-4", children: [
+          /* @__PURE__ */ jsx(
+            "button",
+            {
+              onClick: () => setDebtType("partial"),
+              className: `flex-1 py-2 rounded-lg border ${debtType === "partial" ? "bg-primary text-white border-primary" : "bg-background text-text-main border-border"}`,
+              children: "Parcial"
+            }
+          ),
+          /* @__PURE__ */ jsx(
+            "button",
+            {
+              onClick: () => setDebtType("total"),
+              className: `flex-1 py-2 rounded-lg border ${debtType === "total" ? "bg-primary text-white border-primary" : "bg-background text-text-main border-border"}`,
+              children: "Total"
+            }
+          )
+        ] }),
+        debtType === "partial" && /* @__PURE__ */ jsxs("div", { children: [
+          /* @__PURE__ */ jsx("label", { className: "block text-sm font-medium text-text-main mb-1", children: "Cantidad a reducir (horas)" }),
+          /* @__PURE__ */ jsx(
+            "input",
+            {
+              type: "number",
+              value: debtAmount,
+              onChange: (e) => setDebtAmount(e.target.value),
+              className: "w-full p-2 bg-background border border-border rounded-lg text-text-main focus:ring-primary focus:border-primary",
+              placeholder: "Ej: 5",
+              min: "0",
+              max: debtModalUser.accumulated_debt
+            }
+          )
+        ] }),
+        debtType === "total" && /* @__PURE__ */ jsxs("div", { className: "bg-yellow-100 dark:bg-yellow-900/30 p-3 rounded-lg flex items-start gap-2 text-yellow-700 dark:text-yellow-400 text-sm", children: [
+          /* @__PURE__ */ jsx(AlertCircle, { size: 16, className: "mt-0.5 flex-shrink-0" }),
+          /* @__PURE__ */ jsx("p", { children: "Se eliminará toda la deuda acumulada de este usuario." })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "flex justify-end gap-2 mt-6", children: [
+          /* @__PURE__ */ jsx(
+            "button",
+            {
+              onClick: () => setDebtModalUser(null),
+              className: "px-4 py-2 text-text-muted hover:text-text-main transition-colors",
+              children: "Cancelar"
+            }
+          ),
+          /* @__PURE__ */ jsx(
+            "button",
+            {
+              onClick: handleReduceDebt,
+              className: "px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-lg transition-colors font-bold",
+              disabled: debtType === "partial" && (!debtAmount || parseFloat(debtAmount) <= 0),
+              children: "Confirmar"
+            }
+          )
+        ] })
       ] })
     ] }) })
   ] });

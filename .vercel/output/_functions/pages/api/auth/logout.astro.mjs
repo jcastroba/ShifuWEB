@@ -1,4 +1,4 @@
-import { c as clearUserSession } from '../../../chunks/auth_CSCHR02c.mjs';
+import { c as clearUserSession } from '../../../chunks/auth_CVOqfqat.mjs';
 export { renderers } from '../../../renderers.mjs';
 
 const GET = async ({ cookies, redirect }) => {

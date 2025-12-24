@@ -1,5 +1,5 @@
-import { d as db } from '../../../chunks/db_DSGnrivC.mjs';
-import { g as getUserFromSession } from '../../../chunks/auth_CSCHR02c.mjs';
+import { d as db } from '../../../chunks/db_CQE9smPl.mjs';
+import { g as getUserFromSession } from '../../../chunks/auth_CVOqfqat.mjs';
 export { renderers } from '../../../renderers.mjs';
 
 const GET = async (context) => {
@@ -31,7 +31,7 @@ const POST = async (context) => {
   const user = await getUserFromSession(context);
   if (!user) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
   const body = await context.request.json();
-  const { serverId, targetUserId, schedule } = body;
+  const { serverId, targetUserId, schedule, applyProRating } = body;
   if (!serverId || !targetUserId || !Array.isArray(schedule)) {
     return new Response(JSON.stringify({ error: "Invalid data" }), { status: 400 });
   }
@@ -66,6 +66,26 @@ const POST = async (context) => {
       "UPDATE user_servers SET weekly_hours = $1 WHERE user_id = $2 AND server_id = $3",
       [Math.round(totalWeeklyHours * 100) / 100, targetUserId, serverId]
     );
+    if (applyProRating) {
+      const now = /* @__PURE__ */ new Date();
+      const currentDay = now.getDay() || 7;
+      let hoursToDeduct = 0;
+      for (let d = 1; d < currentDay; d++) {
+        const daySchedule = schedule.find((s) => s.day_of_week === d);
+        if (daySchedule && !daySchedule.is_rest_day && daySchedule.start_time && daySchedule.end_time) {
+          const start = /* @__PURE__ */ new Date(`1970-01-01T${daySchedule.start_time}`);
+          const end = /* @__PURE__ */ new Date(`1970-01-01T${daySchedule.end_time}`);
+          const diff = (end.getTime() - start.getTime()) / (1e3 * 60 * 60);
+          if (diff > 0) hoursToDeduct += diff;
+        }
+      }
+      if (hoursToDeduct > 0) {
+        await db.query(
+          "UPDATE user_servers SET accumulated_debt = COALESCE(accumulated_debt, 0) - $1 WHERE user_id = $2 AND server_id = $3",
+          [hoursToDeduct, targetUserId, serverId]
+        );
+      }
+    }
     await db.query("COMMIT");
     return new Response(JSON.stringify({ success: true, totalHours: totalWeeklyHours }));
   } catch (e) {

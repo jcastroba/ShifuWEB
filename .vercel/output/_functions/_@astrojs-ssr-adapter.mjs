@@ -1,1 +1,1 @@
-export { c as createExports, s as start } from './chunks/entrypoint_CtqoypWN.mjs';
+export * from '@astrojs/vercel/entrypoint';

@@ -1,11 +1,15 @@
 /* empty css                                     */
-import { c as createComponent, m as maybeRenderHead, e as renderTemplate, a as createAstro, d as renderComponent } from '../chunks/astro/server_C_x741Bc.mjs';
+import { e as createComponent, m as maybeRenderHead, h as addAttribute, r as renderTemplate, f as createAstro, i as renderComponent } from '../chunks/astro/server_DRFHNOgy.mjs';
 import 'kleur/colors';
-import { $ as $$Layout } from '../chunks/Layout_BUCrNJaf.mjs';
+import 'html-escaper';
+import { $ as $$Layout } from '../chunks/Layout_5zhxqQCN.mjs';
 import 'clsx';
 export { renderers } from '../renderers.mjs';
 
 const $$Login = createComponent(($$result, $$props, $$slots) => {
+  const CLIENT_ID = undefined                         ;
+  const REDIRECT_URI = "https://shifu-web.vercel.app/api/auth/callback";
+  const oauthUrl = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=identify+guilds`;
   return renderTemplate`<!-- Contenedor principal a pantalla completa -->${maybeRenderHead()}<div class="flex flex-1 w-full h-full absolute inset-0"> <!-- Sección Izquierda --> <div class="w-full md:w-5/12 h-full bg-surface dark:bg-secondary-dark relative overflow-visible flex flex-col justify-center p-10 md:p-20 space-y-6 z-10 transition-colors duration-300"> <!-- Difuminado en el borde derecho que se superpone a la imagen de la derecha (solo desktop) --> <div class="hidden md:block absolute inset-y-0 right-[-2rem] w-16 bg-gradient-to-r from-surface dark:from-secondary-dark to-transparent pointer-events-none transition-colors duration-300"></div> <h1 class="text-4xl font-bold text-text-main dark:text-white font-lilita text-left">
 El mejor bot controlador<br>
 de turnos de Discord
@@ -14,7 +18,7 @@ Shifu es una hermosa y cruel asistente, <br>
 que te ayudara a controlar los tiempos de tu espacio de trabajo,<br>
 midiendo el tiempo que trabajas y que descansas,<br>
 llevando control de tus turnos.
-</p> <a href="#" onclick="window.open('https://discord.com/oauth2/authorize?client_id=1342188880404811886&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A4321%2Fapi%2Fauth%2Fcallback&scope=identify+guilds','popup','width=600,height=800'); return false;" class="bg-primary text-white px-6 py-3 rounded-lg flex items-center w-fit hover:bg-primary-dark transition-colors font-bold shadow-lg"> <img src="/discord.svg" alt="Discord" class="w-8 h-8 mr-2">
+</p> <a href="#"${addAttribute(`window.open('${oauthUrl}','popup','width=600,height=800'); return false;`, "onclick")} class="bg-primary text-white px-6 py-3 rounded-lg flex items-center w-fit hover:bg-primary-dark transition-colors font-bold shadow-lg"> <img src="/discord.svg" alt="Discord" class="w-8 h-8 mr-2">
 Agrega a tu discord
 </a> </div> <!-- Sección Derecha con imagen de fondo --> <div class="hidden md:block w-7/12 h-full bg-cover bg-no-repeat" style="background-image: url('/fondo.png'); background-position: 25% center;"> <!-- Puedes agregar contenido adicional si lo deseas --> </div> </div>`;
 }, "D:/Personal/Todo/Proyectos/Proyectos 2025/Shifu/ShifuWEB/src/components/Login.astro", void 0);

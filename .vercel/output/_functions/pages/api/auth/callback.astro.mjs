@@ -1,9 +1,9 @@
-import { d as db } from '../../../chunks/db_DSGnrivC.mjs';
+import { d as db } from '../../../chunks/db_CQE9smPl.mjs';
 export { renderers } from '../../../renderers.mjs';
 
-const CLIENT_ID = "1342188880404811886";
-const CLIENT_SECRET = process.env.CLIENT_SECRET;
-const DISCORD_REDIRECT_URI = "http://localhost:4321/api/auth/callback";
+const CLIENT_ID = undefined                         ;
+const CLIENT_SECRET = "YQYJc1Fgb8pyYj2wxFnezfanNYooI-S_";
+const DISCORD_REDIRECT_URI = "https://shifu-web.vercel.app/api/auth/callback";
 const DISCORD_TOKEN_URL = "https://discord.com/api/oauth2/token";
 const DISCORD_USER_URL = "https://discord.com/api/users/@me";
 const GET = async ({ request, cookies }) => {
@@ -83,7 +83,9 @@ const GET = async ({ request, cookies }) => {
     cookies.set("discord_user", JSON.stringify(userData), {
       httpOnly: true,
       secure: true,
-      path: "/"
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7
+      // 7 days
     });
     const html = `<!DOCTYPE html>
     <html lang="es">
