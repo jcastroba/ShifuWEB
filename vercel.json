@@ -3,11 +3,13 @@
   "builds": [
     {
       "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": { "distDir": ".vercel/output" }
+      "use": "@vercel/node"
     }
   ],
   "routes": [
-    { "handle": "filesystem" }
+    {
+      "src": "/(.*)",
+      "dest": "/dist/server/entry.mjs"
+    }
   ]
 }
