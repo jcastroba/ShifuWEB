@@ -1,0 +1,37 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import AdminHoursManager from "../../components/AdminHoursManager";
+import db from "../../utils/db";
+import { getUserFromSession } from "../../utils/auth";
+
+const user = await getUserFromSession(Astro);
+if (!user) {
+  return Astro.redirect("/");
+}
+
+// Check if user is admin in any server
+const adminServersQuery = `
+  SELECT s.id, s.name
+  FROM servers s
+  JOIN user_servers us ON s.id = us.server_id
+  WHERE us.user_id = $1 AND us.is_admin = true
+`;
+const { rows: adminServers } = await db.query(adminServersQuery, [user.id]);
+
+if (adminServers.length === 0) {
+  return Astro.redirect("/dashboardIndex");
+}
+---
+
+<Layout title="Gestión de Usuarios">
+  <div class="container mx-auto px-4 py-8 min-h-[calc(100vh-64px)]">
+    <h1 class="text-3xl font-lilita text-secondary-dark dark:text-primary mb-2 text-center transition-colors duration-300">
+      Panel de Administración
+    </h1>
+    <p class="text-center text-text-muted mb-8">
+      Gestiona las horas asignadas a los usuarios de tus servidores.
+    </p>
+
+    <AdminHoursManager client:load adminServers={adminServers} />
+  </div>
+</Layout>

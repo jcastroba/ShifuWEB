@@ -11,11 +11,25 @@ export default {
 				lilita: ['Lilita One', 'sans-serif'],
 			  },
 			colors:{
-				'primary': '#ECA8B0',
-				'secondary': '#D9D7F1',
-				'primary-dark': '#E0488F',
-				'secondary-dark': '#3B3742'
-			}
+				'primary': 'var(--primary)',
+				'secondary': 'var(--secondary)',
+				'primary-dark': 'var(--primary-dark)',
+				'secondary-dark': 'var(--secondary-dark)',
+                'background': 'var(--background)',
+                'surface': 'var(--surface)',
+                'text-main': 'var(--text-main)',
+                'text-muted': 'var(--text-muted)',
+                'border-color': 'var(--border-color)',
+			},
+            animation: {
+                'fade-in': 'fadeIn 0.3s ease-out',
+            },
+            keyframes: {
+                fadeIn: {
+                    '0%': { opacity: '0', transform: 'scale(0.95)' },
+                    '100%': { opacity: '1', transform: 'scale(1)' },
+                }
+            }
 		},
 	},
 	plugins: [],

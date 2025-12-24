@@ -1,8 +1,9 @@
 import type { APIRoute } from "astro";
+import db from "../../../utils/db";
 
-const CLIENT_ID = import.meta.env.PUBLIC_CLIENT_ID;
+const CLIENT_ID = import.meta.env.CLIENT_ID;
 const CLIENT_SECRET = import.meta.env.CLIENT_SECRET;
-const DISCORD_REDIRECT_URI = import.meta.env.PUBLIC_DISCORD_REDIRECT_URI;
+const DISCORD_REDIRECT_URI = import.meta.env.DISCORD_REDIRECT_URI;
 const DISCORD_TOKEN_URL = "https://discord.com/api/oauth2/token";
 const DISCORD_USER_URL = "https://discord.com/api/users/@me";
 
@@ -51,6 +52,32 @@ export const GET: APIRoute = async ({ request, cookies }) => {
     const discordUser = await userResponse.json();
     console.log("👤 Usuario obtenido:", discordUser);
 
+    // 2.5️⃣ Obtener servidores del usuario y actualizar iconos
+    try {
+      const guildsResponse = await fetch("https://discord.com/api/users/@me/guilds", {
+        headers: { Authorization: `Bearer ${tokenData.access_token}` },
+      });
+      
+      if (guildsResponse.ok) {
+        const guilds = await guildsResponse.json();
+        
+        if (Array.isArray(guilds)) {
+          for (const guild of guilds) {
+            if (guild.icon) {
+              const iconUrl = `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`;
+              // Solo actualizamos si el servidor ya existe en nuestra BD
+              await db.query(
+                `UPDATE servers SET icon_url = $1 WHERE discord_server_id = $2`,
+                [iconUrl, guild.id]
+              );
+            }
+          }
+        }
+      }
+    } catch (guildError) {
+      console.error("Error fetching/updating guilds:", guildError);
+    }
+
     const userData = {
       id: discordUser.id,
       displayName:
@@ -63,10 +90,26 @@ export const GET: APIRoute = async ({ request, cookies }) => {
         : "https://cdn.discordapp.com/embed/avatars/0.png",
     };
 
+    // Update User in DB
+    try {
+      await db.query(
+        `INSERT INTO users (id, username, avatar_url) 
+         VALUES ($1, $2, $3) 
+         ON CONFLICT (id) DO UPDATE SET 
+           username = EXCLUDED.username, 
+           avatar_url = EXCLUDED.avatar_url`,
+        [userData.id, userData.username, userData.avatarUrl]
+      );
+    } catch (dbError) {
+      console.error("Error updating user in DB:", dbError);
+      // Continue even if DB update fails, session is what matters for login
+    }
+
     cookies.set("discord_user", JSON.stringify(userData), {
       httpOnly: true,
       secure: import.meta.env.PROD,
       path: "/",
+      maxAge: 60 * 60 * 24 * 7, // 7 days
     });
 
     // 3️⃣ Enviar una respuesta HTML que redirige la ventana principal a /Dashboard (donde se carga tu componente Dashboard.astro)

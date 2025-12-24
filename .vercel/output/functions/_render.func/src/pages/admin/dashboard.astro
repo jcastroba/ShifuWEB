@@ -1,0 +1,37 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import AdminDashboard from "../../components/AdminDashboard";
+import db from "../../utils/db";
+import { getUserFromSession } from "../../utils/auth";
+
+const user = await getUserFromSession(Astro);
+if (!user) {
+  return Astro.redirect("/");
+}
+
+// Check if user is admin in any server
+const adminServersQuery = `
+  SELECT s.id, s.name, s.icon_url
+  FROM servers s
+  JOIN user_servers us ON s.id = us.server_id
+  WHERE us.user_id = $1 AND us.is_admin = true
+`;
+const { rows: adminServers } = await db.query(adminServersQuery, [user.id]);
+
+if (adminServers.length === 0) {
+  return Astro.redirect("/dashboardIndex");
+}
+---
+
+<Layout title="Dashboard Administrativo">
+  <div class="container mx-auto px-4 py-8 min-h-[calc(100vh-64px)]">
+    <h1 class="text-3xl font-lilita text-secondary-dark dark:text-primary mb-2 text-center transition-colors duration-300">
+      Dashboard Administrativo
+    </h1>
+    <p class="text-center text-text-muted mb-8">
+      Supervisión en tiempo real y reportes históricos.
+    </p>
+
+    <AdminDashboard client:load adminServers={adminServers} />
+  </div>
+</Layout>
