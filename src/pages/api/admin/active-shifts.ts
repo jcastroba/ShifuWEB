@@ -24,9 +24,10 @@ export const GET: APIRoute = async (context) => {
   const activeQuery = `
     SELECT 
       s.id, s.user_id, u.username, us.nickname,
-      s.start_time, s.observations,
+      s.start_time + INTERVAL '4 hours' as start_time,
+      s.observations,
       (
-        SELECT json_build_object('id', b.id, 'break_start', b.break_start, 'reason', b.reason)
+        SELECT json_build_object('id', b.id, 'break_start', b.break_start + INTERVAL '4 hours', 'reason', b.reason)
         FROM breaks b 
         WHERE b.shift_id = s.id AND b.break_end IS NULL
         LIMIT 1

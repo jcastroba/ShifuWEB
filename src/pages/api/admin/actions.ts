@@ -26,14 +26,14 @@ export const POST: APIRoute = async (context) => {
         
         // First, close any open breaks for this shift
         await db.query(
-            "UPDATE breaks SET break_end = NOW() WHERE shift_id = $1 AND break_end IS NULL",
+            "UPDATE breaks SET break_end = NOW() - INTERVAL '4 hours' WHERE shift_id = $1 AND break_end IS NULL",
             [shiftId]
         );
 
         // Then close the shift
         await db.query(
             `UPDATE shifts 
-             SET end_time = NOW(), 
+             SET end_time = NOW() - INTERVAL '4 hours', 
                  observations = CASE 
                     WHEN observations IS NULL OR observations = '' THEN $2 
                     ELSE observations || E'\n' || $2 
@@ -45,7 +45,7 @@ export const POST: APIRoute = async (context) => {
         if (!breakId) return new Response(JSON.stringify({ error: "Break ID required" }), { status: 400 });
         
         await db.query(
-            "UPDATE breaks SET break_end = NOW() WHERE id = $1",
+            "UPDATE breaks SET break_end = NOW() - INTERVAL '4 hours' WHERE id = $1",
             [breakId]
         );
     } else {
