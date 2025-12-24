@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import db from "../../../utils/db";
 
-const CLIENT_ID = import.meta.env.CLIENT_ID;
+const CLIENT_ID = import.meta.env.PUBLIC_CLIENT_ID || import.meta.env.CLIENT_ID;
 const CLIENT_SECRET = import.meta.env.CLIENT_SECRET;
 const DISCORD_REDIRECT_URI = import.meta.env.DISCORD_REDIRECT_URI;
 const DISCORD_TOKEN_URL = "https://discord.com/api/oauth2/token";
